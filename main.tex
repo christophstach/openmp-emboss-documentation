@@ -1,0 +1,63 @@
+\input{settings.tex}
+
+\begin{document}
+    \begin{titlepage}
+        \noindent
+        \includegraphics[width=1.0\textwidth]{images/Q04_HTW_Berlin_Logo_quer_pos_FARBIG_RGB.jpg}
+
+
+        \vspace{2cm}
+
+        \begin{center}
+            \noindent
+            \huge{\textbf{Grayscale, RGB to HSV and Emboss parallelized with OpenMP}}
+
+            \vspace{1cm}
+
+            \noindent
+            \LARGE{Module: Programmierkonzepte und Algorithmen}
+
+            \vspace{1cm}
+
+            \noindent
+            \small{\today}
+        \end{center}
+
+        \vfill
+
+        \noindent
+        \begin{minipage}[t]{0.5\textwidth}
+            \begin{flushleft}
+                \textbf{Student}\\
+                Name: Christoph Stach\\
+                Matrikel-Nr: 0555912                
+            \end{flushleft}
+        \end{minipage}
+        \begin{minipage}[t]{0.5\textwidth}
+            \begin{flushright}
+                \textbf{Dozent}\\
+                Mykyta Kovalenko\\
+            \end{flushright}
+        \end{minipage}
+    \end{titlepage}
+
+    \tableofcontents
+
+    \input{parts/01_introduction.tex}
+    \input{parts/02_grayscale.tex}
+    \input{parts/03_hsv.tex}
+    \input{parts/04_emboss.tex}
+    \input{parts/05_conclusion.tex}
+
+    \begin{spacing}{1.0}
+        \phantomsection
+        \addcontentsline{toc}{chapter}{\listfigurename}
+        \listoffigures        
+    \end{spacing} 
+
+    \begin{spacing}{1.75}
+        \phantomsection
+        \addcontentsline{toc}{chapter}{\lstlistlistingname}
+        \lstlistoflistings        
+    \end{spacing}
+\end{document}

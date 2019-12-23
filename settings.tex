@@ -1,0 +1,33 @@
+\documentclass[listof=nochaptergap]{report}
+
+\usepackage[utf8]{inputenc}
+\usepackage[english]{babel}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{hyperref}
+\usepackage{tikz}
+\usepackage{pgfplots}
+\usepackage{listings}
+\usepackage{minted}
+\usepackage{caption}
+\usepackage{setspace}
+
+\geometry{
+    paper=a4paper,
+    top=32mm,
+    bottom=32mm,
+    left=25mm,
+    right=25mm
+}
+
+\setminted[cpp]{
+    frame=lines,
+    framesep=2mm,
+    fontsize=\footnotesize,
+    linenos,
+    breaklines
+}
+
+\renewcommand{\lstlistingname}{Algorithm}% Listing -> Algorithm
+\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+
