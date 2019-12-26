@@ -1,6 +1,10 @@
 \chapter{HSV}
 
+HSV (Hue, Saturation, Value) is a different representation von the RGB (Red, Green, Blue) color-model. It is used to make easy adjustments according to it's components. Usually image programs and \LaTeX interpret images as RGB images. This is a reason for the colorful representation of the images.
+
 \section{Performance Tests}
+
+The RGB2HSV performance is also the best with a parallelization on the outer For-Loop. Strongly improving until the usage of 4 threads. Using 8 threads yields the performance peak. Same observations like in performance tests of \ref{fig:grayscale} were made when to many threads are in use.
 
 \begin{center}
     \begin{figure}[H]
@@ -9,12 +13,11 @@
         \begin{tikzpicture}
             \begin{axis}[
                 title={},
-                width=0.85\textwidth,
+                width=0.75\textwidth,
                 xlabel={Number of Threads},
                 ylabel={Execution Time (in ms)},
                 xmin=0,
                 ymin=0,
-                ymode=log,
                 grid=major
             ]
                 \addplot coordinates {
@@ -39,12 +42,14 @@
 
 \section{Results}
 
+The self-implemented algorithm yields very similar results compared to the OpenCV version. Subtracting the image matrices reveals a small differences, which could be the consequences of rounding-errors.
+
 \begin{figure}[H]
     \centering
 
-    \includegraphics[width=0.25\textwidth]{images/dice.png}
-    \includegraphics[width=0.25\textwidth]{images/cv-hsv.png}
-    \includegraphics[width=0.25\textwidth]{images/own-hsv.png}
+    \includegraphiThe self-implemented algorithm yields very similar results compared to the OpenCV version. Subtracting the image matrices reveals a small differences, which could be the consequences of rounding-errors.cs[width=0.20\textwidth]{images/dice.png}
+    \includegraphics[width=0.20\textwidth]{images/cv-hsv.png}
+    \includegraphics[width=0.20\textwidth]{images/own-hsv.png}
     
     \caption{RGB to HSV results of OpenCV (middle) and self-implemented  Algorithm (right)}
     \label{fig:hsv}
@@ -121,3 +126,5 @@ cv::Mat applyOpenCvHsv(const cv::Mat &srcImage) {
 \end{listing}
 
 \subsection{Performance}
+
+OpenCV outperforms the self-implemented version significantly with a runtime of $ xxx $.
