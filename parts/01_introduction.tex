@@ -1,2 +1,10 @@
-    
-    \chapter{Introduction}
+\chapter{Introduction}
+
+This document includes the technical documentation about various task implemented with OpenMP. The goal of this document is to show the outcomes of various algorithms and compare their performance with the OpenCV library. OpenMP is a library that enables easy to use parallel computing on multiple CPUs. To demonstrate its capabilities the author implemented a Grayscale-, a RGB2HSV- and an Emboss-Algorithm. All of them consist of two For-Loops, which loop over all pixels of an image.\\
+
+The run time of each algorithm was measured with different usage scenarios of OpenMP. To parallelize a program into multiple threads, OpenMP offers the \mintinline{cpp}{#pragma omp parallel for} compiler directive for For-Loops.  The author used OpenMP on the outer For-Loop, the inner For-Loop and both For-Loops. The results are shown in the following performance test diagrams for each algorithm. Also the results, the algorithms produce, are demonstrated and the implementation is given accordingly.\\
+
+All performances tests were done on a Dell XPS 15 9955, with a Intel Core i7, 16GB ram and a nVidia GeForce GTX 960m.\\
+
+The source code this document is based on is hosted on \url{http://github.com} under the \url{http://github.com/christophstach/openmp-emboss}.
+
