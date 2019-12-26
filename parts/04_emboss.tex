@@ -1,5 +1,7 @@
 \chapter{Emboss}
 
+Performance between $ 6.41 $ and $ 45.16 $ was achieved by the self-implemented Emboss-Algorithm. Using 8 threads on the outer with OpenMP used on the outer For-Loop delivers the best performance.
+
 \section{Performance Tests}
 
 \begin{center}
@@ -9,12 +11,11 @@
         \begin{tikzpicture}
             \begin{axis}[
                 title={},
-                width=0.85\textwidth,
+                width=0.75\textwidth,
                 xlabel={Number of Threads},
                 ylabel={Execution Time (in ms)},
                 xmin=0,
                 ymin=0,
-                ymode=log,
                 grid=major
             ]
                 \addplot coordinates {
@@ -42,8 +43,8 @@
 \begin{figure}[H]
     \centering
 
-    \includegraphics[width=0.25\textwidth]{images/dice.png}
-    \includegraphics[width=0.25\textwidth]{images/own-emboss.png}
+    \includegraphics[width=0.20\textwidth]{images/dice.png}
+    \includegraphics[width=0.20\textwidth]{images/own-emboss.png}
     
     \caption{Results of self-implemented Emboss-Algorithm}
     \label{fig:emboss}

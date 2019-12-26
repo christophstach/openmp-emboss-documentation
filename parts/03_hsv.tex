@@ -1,10 +1,10 @@
 \chapter{HSV}
 
-HSV (Hue, Saturation, Value) is a different representation von the RGB (Red, Green, Blue) color-model. It is used to make easy adjustments according to it's components. Usually image programs and \LaTeX interpret images as RGB images. This is a reason for the colorful representation of the images.
+HSV (Hue, Saturation, Value) is a different representation of the RGB (Red, Green, Blue) color-model. It is used to make easy adjustments according to it's components. Usually image programs and \LaTeX \space interpret images as RGB images. This is the reason for the colorful representation of the images.
 
 \section{Performance Tests}
 
-The RGB2HSV performance is also the best with a parallelization on the outer For-Loop. Strongly improving until the usage of 4 threads. Using 8 threads yields the performance peak. Same observations like in performance tests of \ref{fig:grayscale} were made when to many threads are in use.
+The RGB2HSV is also performing best (between $ 6.27 $ and $ 43.51 $) with a parallelization on the outer For-Loop.  Strongly improving until the usage of 4 threads. Using 8 threads yields the performance peak. Same observations as in the grayscale performance tests \ref{fig:grayscale} were made, when to many threads were in use.
 
 \begin{center}
     \begin{figure}[H]
@@ -47,7 +47,7 @@ The self-implemented algorithm yields very similar results compared to the OpenC
 \begin{figure}[H]
     \centering
 
-    \includegraphiThe self-implemented algorithm yields very similar results compared to the OpenCV version. Subtracting the image matrices reveals a small differences, which could be the consequences of rounding-errors.cs[width=0.20\textwidth]{images/dice.png}
+    \includegraphics[width=0.20\textwidth]{images/dice.png}
     \includegraphics[width=0.20\textwidth]{images/cv-hsv.png}
     \includegraphics[width=0.20\textwidth]{images/own-hsv.png}
     
@@ -112,14 +112,12 @@ cv::Mat applyHsvOuter(cv::Mat srcImage, int numThreads = omp_get_num_procs()) {
 
 \subsection{Code}
 
+\noindent
+As with grayscale image transformation to HSV can be done in one line of code with OpenCV. 
 
 \begin{listing}[H]
     \begin{minted}{cpp}
-cv::Mat applyOpenCvHsv(const cv::Mat &srcImage) {
-    cv::Mat destImage;
-    cv::cvtColor(srcImage, destImage, cv::COLOR_BGR2HSV);
-    return destImage;
-}
+cv::cvtColor(srcImage, destImage, cv::COLOR_BGR2HSV);
     \end{minted}
     \captionof{lstlisting}{RGB to HSV conversion  with OpenCV}
     \label{listing:hsv_opencv}
@@ -127,4 +125,4 @@ cv::Mat applyOpenCvHsv(const cv::Mat &srcImage) {
 
 \subsection{Performance}
 
-OpenCV outperforms the self-implemented version significantly with a runtime of $ xxx $.
+OpenCV outperforms the self-implemented version significantly with a runtime of $ 0.16 $ ms .

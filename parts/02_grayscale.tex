@@ -1,10 +1,13 @@
 \chapter{Grayscale}
 
+\noindent
 To convert an image to gray scale three channels needs to be converted to one channel. The remaining channel needs to capture a kind of mean of the other channels. This can be done with different formulars. It is possible to use luminosity formular $ 0.21r + 0.72g + 0.07b $. But this project uses the same formular like OpenCV uses, $ 0.299r + 0.587g + 0.114b $, to make results better comparable.
 
 \section{Performance Tests}
 
-As shown in the figure bellow, all implementations perform between an image conversion between $ 4 $ ms and $ 45 $ ms. Best performance is delivered by using at least 4 threads. Using more threads doesn't result in a significant performance boost. With more than 8 threads the performance drops significantly parallelizing the inner For-Loop. In general parallelization on the outer For-Loop works best.
+
+\noindent
+As shown in the figure bellow, all implementations perform between an image conversion between $ 3.43 $ ms and $ 41.85 $ ms. A parallelization with 8 threads on both For-Loops achieves the best performance. Good performance is delivered by using at least 4 threads for the outer For-Loop. Using more threads doesn't result in a significant performance boost. With more than 8 threads the performance drops significantly parallelizing the inner For-Loop. In general parallelization on the outer For-Loop works best.
 
 \begin{center}
     \begin{figure}[H]
@@ -92,6 +95,7 @@ cv::Mat applyGrayscaleOuter(cv::Mat srcImage, int numThreads = omp_get_num_procs
 
 \subsection{Code}
 
+\noindent
 Image transformation from color to grayscale can be conveniently done with one line of code in OpenCV.
 
 \begin{listing}[H]
@@ -104,4 +108,5 @@ cv::cvtColor(srcImage, destImage, cv::COLOR_BGR2GRAY);
 
 \subsection{Performance}
 
-As OpenCV computes on the GPU with a runtime of $ xxx $, it is significantly faster and outperforms the custom OpenMP.
+\noindent
+As OpenCV computes on the GPU with a runtime of $ 0.06 $ ms, it is significantly faster and outperforms the custom OpenMP implementation.

@@ -1,3 +1,10 @@
+\chapter{Conclusion}
 
+\noindent
+As shown in the tests above, OpenCV always performs better than the self-implemented OpenMP versions. Applying grayscale conversion is faster than converting to HSV. Emboss is the slowest of them all. \\
 
-    \chapter{Conclusion}
+\noindent
+All algorithms show similar performance curves. The best configuration was always 8 threads with parallelization on the outer For-Loop. The only exception made the grayscale algorithm, which performed best on 8 threads on both for Loops. The reason for that is not clear. It could be possible that grayscale uses less memory and therefore has less memory management in combination with multiple threads. Another reason could be that the CPU of the test device was throttling for a short period of time during the runtime of the test.\\
+
+\noindent
+Finally there is enough evidence that using more than 8 threads for simple algorithm like the ones presented in this documentation, doesn't yield better results on transforming images of small sizes on normal laptop like the XPS 15.
