@@ -2,10 +2,13 @@
     
     \chapter{Grayscale}
 
+
     \section{Performance Tests}
 
     \begin{center}
         \begin{figure}[H]
+            \centering
+
             \begin{tikzpicture}
                 \begin{axis}[
                     title={},
@@ -36,6 +39,19 @@
             \caption{Grayscale Performance Tests}
         \end{figure}
     \end{center}
+
+    \section{Results}
+
+    \begin{figure}[H]
+        \centering
+
+        \includegraphics[width=0.25\textwidth]{images/dice.png}
+        \includegraphics[width=0.25\textwidth]{images/cv-grayscale.png}
+        \includegraphics[width=0.25\textwidth]{images/own-grayscale.png}
+        
+        \caption{Grayscale results of OpenCV (middle) and self-implemented  Algorithm (right)}
+        \label{fig:grayscale}
+    \end{figure}
 
 
     \section{Implementation}
