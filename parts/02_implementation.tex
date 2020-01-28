@@ -1,0 +1,45 @@
+\chapter{Implementation}
+
+\section{Projectsetup}
+
+\section{Implementationvariants}
+
+Each algorithms is implemented three times to test different implementation strategies. The two for-loops, which loop over each pixel of in image, are implemtend in the following three variants:
+
+\begin{minted}{cpp}
+#pragma omp parallel for default(none) shared(srcImage, destImage)
+for (int row = 0; row < srcImage.rows; row++) {
+    for (int col = 0; col < srcImage.cols; col++) {
+\end{minted}
+
+\noindent
+The first one parallelizes the outer for loop. It splits up the amount of rows into equal parts. Then $ n $ threads are created and each thread computes an equal amount of parts.
+
+\begin{minted}{cpp}
+for (int row = 0; row < srcImage.rows; row++) {
+    #pragma omp parallel for default(none) shared(srcImage, destImage, row)
+    for (int col = 0; col < srcImage.cols; col++) {
+\end{minted}
+
+\noindent
+The second solution creates $ n $ threads and splits each row into small parts of pixels. The rows are computed sequentially and then the columns are computed in parallel.
+
+\begin{minted}{cpp}
+#pragma omp parallel for collapse(2) default(none) shared(srcImage, destImage)
+for (int row = 0; row < srcImage.rows; row++) {
+    for (int col = 0; col < srcImage.cols; col++) {
+\end{minted}
+
+The \mintinline{cpp}{# collapse()} keyword
+
+\section{Grayscale}
+
+\noindent
+To convert an image to grayscale the three color channels needs to be converted to one channel. The remaining channel needs to capture a kind of mean of the other channels. This can be done with different formulars. It is possible to use luminosity formular $ 0.21r + 0.72g + 0.07b $. But this project uses the same formular like OpenCV uses, $ 0.299r + 0.587g + 0.114b $, to make results better comparable. Each pixel of an image is converted by this formular to convert the whole image to a grayscale image.
+
+\section{HSV}
+
+\noindent
+HSV (Hue, Saturation, Value) is a different representation of the RGB (Red, Green, Blue) color-model. It is used to make easy adjustments according to it's components. Usually image programs and \LaTeX \space interpret images as RGB images. This is the reason for the colorful representation of the images.
+
+\section{Emboss}
