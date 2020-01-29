@@ -1,45 +1,127 @@
 \chapter{Implementation}
 
-\section{Projectsetup}
+\section{Project setup}
 
-\section{Implementationvariants}
+To make the project runnable on different machines the CMake\footnote{\url{https://cmake.org/}} was chosen as a build tool. Under Linux uses gcc and g++ to compile C and C++ projects. The project uses OpenCV to load images and compare results. All images are converted to 4-channel images. This was necesary to make the handwritten algorithms compatible with all kinds of images. To further improve performance it would be beneficial to let the algorithms handle different types of image data themself in the future.\\
+
+The configuration for the project can be found in the CMakeList.txt. Also the package manager CPM\footnote{\url{https://github.com/TheLartians/CPM.cmake}} is used. CPM extends CMake to easily download third party libraries from git hosting services.\\
+
+The library cxxopts\footnote{\url{https://github.com/jarro2783/cxxopts}} was used to add a proper CLI interface and complete concept of the application.
+
+\section{Implementation variants}
 
 Each algorithms is implemented three times to test different implementation strategies. The two for-loops, which loop over each pixel of in image, are implemtend in the following three variants:
 
+\begin{listing}
 \begin{minted}{cpp}
 #pragma omp parallel for default(none) shared(srcImage, destImage)
 for (int row = 0; row < srcImage.rows; row++) {
     for (int col = 0; col < srcImage.cols; col++) {
 \end{minted}
+\captionof{lstlisting}{For-Loop parallelization variant 1}
+\label{listing:forloop1}
+\end{listing}
 
-\noindent
-The first one parallelizes the outer for loop. It splits up the amount of rows into equal parts. Then $ n $ threads are created and each thread computes an equal amount of parts.
 
+
+The first one parallelizes the outer for loop. It splits up the amount of rows into equal parts. Then $ n $ threads are created and each thread computes an equal amount of parts. 
+
+\pagebreak
+
+\begin{listing}[H]
 \begin{minted}{cpp}
 for (int row = 0; row < srcImage.rows; row++) {
     #pragma omp parallel for default(none) shared(srcImage, destImage, row)
     for (int col = 0; col < srcImage.cols; col++) {
 \end{minted}
+\captionof{lstlisting}{For-Loop parallelization variant 2}
+\label{listing:forloop2}
+\end{listing}
 
-\noindent
+
 The second solution creates $ n $ threads and splits each row into small parts of pixels. The rows are computed sequentially and then the columns are computed in parallel.
 
+\begin{listing}[H]
 \begin{minted}{cpp}
 #pragma omp parallel for collapse(2) default(none) shared(srcImage, destImage)
 for (int row = 0; row < srcImage.rows; row++) {
     for (int col = 0; col < srcImage.cols; col++) {
 \end{minted}
+\captionof{lstlisting}{For-Loop parallelization variant 3}
+\label{listing:forloop3}
+\end{listing}
 
-The \mintinline{cpp}{# collapse()} keyword
+
+The \mintinline{cpp}{# collapse(2)} keyword increases the ttal number of iterations that will be partitioned across the available number of OMP threads\footnote{\url{https://software.intel.com/en-us/articles/openmp-loop-collapse-directive}}.
 
 \section{Grayscale}
 
-\noindent
+
 To convert an image to grayscale the three color channels needs to be converted to one channel. The remaining channel needs to capture a kind of mean of the other channels. This can be done with different formulars. It is possible to use luminosity formular $ 0.21r + 0.72g + 0.07b $. But this project uses the same formular like OpenCV uses, $ 0.299r + 0.587g + 0.114b $, to make results better comparable. Each pixel of an image is converted by this formular to convert the whole image to a grayscale image.
 
 \section{HSV}
 
-\noindent
 HSV (Hue, Saturation, Value) is a different representation of the RGB (Red, Green, Blue) color-model. It is used to make easy adjustments according to it's components. Usually image programs and \LaTeX \space interpret images as RGB images. This is the reason for the colorful representation of the images.
 
+First all pixel values are devided by $ 255.0 $. For each pixel the maximum and minimum of the color channels is taken and saved into the variables \mintinline{cpp}{cMax} and \mintinline{cpp}{cMin}. Then highest difference is taken as a reference value. The following formular calculates the Hue:
+
+\begin{listing}[H]
+\begin{minted}{cpp}
+if (cMax == cMin) {
+    h = 0;
+} else if (cMax == r) {
+    h = int(60 * ((g - b) / diff) + 360) % 360;
+} else if (cMax == g) {
+    h = int(60 * ((b - r) / diff) + 120) % 360;
+} else {
+    h = int(60 * ((r - g) / diff) + 240) % 360;
+}
+\end{minted}
+\captionof{lstlisting}{HSV algorithm}
+\label{listing:hsv1}
+\end{listing}
+
+
+The Saturation is then simply calculated by exucuting \mintinline{cpp}{s = cMax == 0 ? 0 : (diff / cMax);}. The value is just the  \mintinline{cpp}{cMax} variable.
+
 \section{Emboss}
+
+The Emboss algorithm compares every channel each pixel with it's upper left neighbour. The maximum difference is taken as a reference value.
+
+
+\begin{listing}[H]
+\begin{minted}{cpp}
+int diffR, diffG, diffB, diff, gray;
+auto srcPixel = srcImage.at<cv::Vec4b>(row, col);
+auto upperLeftPixel = srcImage.at<cv::Vec4b>(row - 1, col - 1);
+
+diffR = std::abs(srcPixel[2] - upperLeftPixel[2]);
+diffG = std::abs(srcPixel[1] - upperLeftPixel[1]);
+diffB = std::abs(srcPixel[0] - upperLeftPixel[0]);
+
+diff = std::max(diffR, std::max(diffG, diffB));
+\end{minted}
+\captionof{lstlisting}{Emboss algorithm 1}
+\label{listing:emboss1}
+\end{listing}
+
+Afterwards a new gray color is calculated and set for all channels of the destination image. The alpha channel is taken as is from the source image.
+
+\begin{listing}[H]
+\begin{minted}{cpp}
+gray = 128 + diff;
+gray = gray > 255 ? 255 : gray;
+gray = gray < 0 ? 0 : gray;
+
+cv::Vec4b destPixel = cv::Vec4b(
+    uchar(gray),
+    uchar(gray),
+    uchar(gray),
+    srcPixel[3]
+);
+
+destImage.at<cv::Vec4b>(row, col) = destPixel;
+\end{minted}
+\captionof{lstlisting}{Emboss algorithm 2}
+\label{listing:emboss2}
+\end{listing}

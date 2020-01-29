@@ -1,0 +1,130 @@
+\chapter{Results}
+
+The chapter results shows visual results of the three algorithm. Each algorithm was tested with three different images. The images have the following properties:
+
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{|l|l|l|l|}
+        \hline
+        \textbf{}   & \textbf{dice.png} & \textbf{dice\_large.png} & \textbf{pnglogo-blk.png} \\ \hhline{|=|=|=|=|}
+        Width       & 800px             & 1754px                   & 1024px                   \\ \hline
+        Height      & 600px             & 1554px                   & 768px                    \\ \hline
+        Filesize    & 295 KB            & 1.5 MB                   & 516                      \\ \hline
+        Transparent & No                & Yes                      & No                       \\ \hline
+    \end{tabular}
+\end{table}
+
+In the following sections the first image row is always the \textbf{dice.png}, the second image row is the \textbf{dice\_large.png} and the third row always shows the \textbf{pnglogo-blk.png}.\\
+
+The x-axis of each plot shows the number of threads used and the y-axis shows the execution time in ms of the corresponding variant.
+
+\newpage
+\section{Grayscale}
+
+The self-implemtend version yielded exactly the same visual results as the OpenCV version wich was expected because the same formular was used.
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=0.30\textwidth]{images/dice.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-cv.dice.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-my.dice.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/dice_large.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-cv.dice_large.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-my.dice_large.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/pnglogo-blk.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-cv.pnglogo-blk.png}
+    \includegraphics[width=0.30\textwidth]{images/results/grayscale-my.pnglogo-blk.png}
+
+    \begin{center}
+        \caption{Grayscale results of OpenCV (middle) and self-implemented  Algorithm (right)}            
+    \end{center}
+
+    \label{fig:grayscale1}
+\end{figure}
+
+The top performance results for grayscale were $ 0.6077 $ ms, $ 9.51975 $ ms  and $ 5.41915 $ ms for the three images. In comparison OpenCV took $ 0.0876 $ ms, $ 0.5389 $ ms and $ 0.14725 $ ms.
+
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \input{parts/graphs/01_grayscale.tex}
+        \caption{Performance results of Grayscale conversion algorithm}
+    \end{figure}
+\end{center}
+
+\newpage
+\section{HSV}
+
+The self-implemented version of the HSV algorithm yielded slightly different results compared with the OpenCV version. By substracting the two resulting image matrices, it showed small error values. These differences are not visible by eye and could be the result of different floating number rouding behaviour.
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=0.30\textwidth]{images/dice.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-cv.dice.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-my.dice.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/dice_large.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-cv.dice_large.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-my.dice_large.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/pnglogo-blk.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-cv.pnglogo-blk.png}
+    \includegraphics[width=0.30\textwidth]{images/results/hsv-my.pnglogo-blk.png}
+
+    \begin{center}
+        \caption{HSV results of OpenCV (middle) and self-implemented  Algorithm (right)}            
+    \end{center}
+
+    \label{fig:hsv1}
+\end{figure}
+
+
+The top performance results for HSV were $ 1.67335 $ ms, $ 26.5975 $ ms  and $ 2.78265 $ ms for the three images. In comparison OpenCV took $ 0.2243 $ ms, $ 1.29245 $ ms and $ 0.4109 $ ms.
+
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \input{parts/graphs/02_hsv.tex}
+        \caption{Performance results of HSV conversion algorithm}
+    \end{figure}
+\end{center}
+
+\section{Emboss}
+
+As OpenCV doesn't offer an implementation of the Emboss algorithm, no comparison was possible.
+
+\begin{figure}[H]
+    \centering
+
+    \includegraphics[width=0.30\textwidth]{images/dice.png}
+    \includegraphics[width=0.30\textwidth]{images/results/emboss-my.dice.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/dice_large.png}
+    \includegraphics[width=0.30\textwidth]{images/results/emboss-my.dice_large.png}
+    \\
+    \includegraphics[width=0.30\textwidth]{images/pnglogo-blk.png}
+    \includegraphics[width=0.30\textwidth]{images/results/emboss-my.pnglogo-blk.png}
+    
+    \begin{center}
+        \caption{Emboss results of self-implemented Algorithm (right)}
+    \end{center}
+
+    \label{fig:emboss1}
+\end{figure}
+
+The top performance results for Emboss were $ 1.1699 $ ms, $ 6.6008 $ ms  and $ 1.90685 $ ms for the three images.
+
+\begin{center}
+    \begin{figure}[H]
+        \centering
+        \input{parts/graphs/03_emboss.tex}
+        \caption{Performance results of Emboss algorithm}
+    \end{figure}
+\end{center}

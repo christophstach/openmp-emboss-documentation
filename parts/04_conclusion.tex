@@ -1,0 +1,9 @@
+\chapter{Conclusion}
+
+As shown in the tests above, OpenCV always performs (up to 10 times faster) better than the self-implemented OpenMP versions. The reason for that is than OpenCV also computes on the GPU. Applying grayscale conversion is faster than converting to HSV. Emboss is the slowest of them all. \\
+
+All algorithms show similar performance curves. The best configuration was usually 8 threads with parallelization on the outer For-Loop or with usage of the \mintinline{cpp}{# collapse} directive.\\
+
+Finally there is enough evidence that the optimal number of threads is the number of threads the CPU of the device supports. In case case of XPS 15 the CPU has 4 cores and therefore 8 threads.\\
+
+In the end is clear that OpenMP is a very capable tool for implemented high performance parallelization strategies.

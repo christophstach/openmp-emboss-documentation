@@ -1,22 +1,44 @@
 \documentclass[listof=nochaptergap]{report}
 
+\usepackage[T1]{fontenc}
 \usepackage[utf8]{inputenc}
+
+\usepackage[scaled]{helvet}
+% \usepackage{tgbonum}
+% \usepackage{courier}
+% \usepackage{lmodern}
+% \usepackage{tgtermes}
+% \usepackage{mathptmx}
+% \usepackage{txfonts}
+% \usepackage{tgheros}
+% \usepackage{tgadventor}
+
 \usepackage[english]{babel}
 \usepackage{geometry}
 \usepackage{graphicx}
 \usepackage{hyperref}
 \usepackage{tikz}
 \usepackage{pgfplots}
-\usepackage{listings}
 \usepackage{minted}
+\usepackage{listings}
+
 \usepackage{caption}
 \usepackage{setspace}
+\usepackage{lipsum}
+\usepackage{grffile}
+\usepackage{booktabs}
+\usepackage{hhline}
+
+\renewcommand\familydefault{\sfdefault} 
+\setlength\parindent{0pt}
+\renewcommand{\baselinestretch}{1.25} 
+
 
 
 \geometry{
     paper=a4paper,
-    top=30mm,
-    bottom=30mm,
+    top=25mm,
+    bottom=25mm,
     left=25mm,
     right=25mm
 }
@@ -26,8 +48,9 @@
     framesep=2mm,
     fontsize=\footnotesize,
     linenos,
-    breaklines
+    breaklines,
+    xleftmargin=1.75em
 }
 
 \renewcommand{\lstlistingname}{Algorithm}% Listing -> Algorithm
-\renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
+% \renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
